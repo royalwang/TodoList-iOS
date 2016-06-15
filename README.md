@@ -1,28 +1,50 @@
 # TodoList-iOS
 
-TodoList-iOS is a sample application that allows you to simply keep track of things to be done. This sample application demonstrates how to leverage, in a mobile iOS 9 application, a Kitura-based server application written in Swift.
+An example using the Kitura web framework and HTTP Server to develop a backend for a iOS todo list organizer
+
+[![Build Status](https://travis-ci.org/IBM-Swift/Kitura-TodoList.svg?branch=master)](https://travis-ci.org/IBM-Swift/todolist-ios)
+
+> Supports the 05-03 SNAPSHOT.
 
 
-## Getting Started ##
+## Initial Setup : ##
 
+Make sure you are running at least XCode 7.3.
 
-### Run Locally ###
+1. Automatically generate an XCode project from the Package.swift within the todolist-ios folder:
 
-1. Build and Run TodoList-Server
+  `swift build -X`
+
+2. Open XCode project
+
+  `open TodoList.xcodeproj`
+
+3. Switch the toolchain to the open source version of Swift.
+
+## Quick start for running locally
+
+1. Install the [05-03-DEVELOPMENT Swift toolchain](https://swift.org/download/)
+
+2. Install Kitura dependencies:
+
+  1. Mac OS X:
+
+    `brew install curl`
+
+3. Navigate to the TodoList-Server directory and Build/Run the TodoList Kitura backend
   - `build swift`
-  - `./.build/debug/KituraTodoList`
+  - `./.build/debug/TodoList-Server`
 
-2. Run Couchdb inside another terminal window
+4. Run Couchdb inside another terminal window
   - `couchdb`
 
-3. Open `TodoList-iOS.xcworkspace` and run the simulator
+5. Open `TodoList-iOS.xcodeproj` and build/run the simulator
 
 ## Deploy to BlueMix Automatically ##
 Simply click the deploy to bluemix button and follow the prompts! (Currently the repo is not public so this feature is invalid)
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy?repository=https://github.com/IBM-Swift/todolist-ios.git)
 
-Then inside
 ## Deploying to BlueMix Manually##
 
 1. Get an account for [Bluemix](https://new-console.ng.bluemix.net/?direct=classic)
@@ -39,7 +61,7 @@ Then inside
 
 3. Run `cf push`
 
-    ***Note** The uploading droplet stage should take a long time, roughly 4-6 minutes. If it worked correctly, it should say:
+    Note: The uploading droplet stage should take a long time, roughly 4-6 minutes. If it worked correctly, it should say:
 
     ```
     1 of 1 instances running
@@ -87,7 +109,7 @@ Then inside
 
     Set the reduce function to `_count` which will tally all of the returned documents.
 
-
+8. Open `TodoList-iOS.xcodeproj` and build/run the simulator
 
 ## License
 
