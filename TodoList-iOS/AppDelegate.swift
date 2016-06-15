@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -40,7 +41,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc(applicationWillTerminate:) func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
+    
+    @objc(application:willFinishLaunchingWithOptions:) func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    {
+        // Override point for customization after application launch.
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func applicationWillTerminate(application: UIApplication)
+    {
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        let loginManager: FBSDKLoginManager = FBSDKLoginManager()
+        loginManager.logOut()
+    }
+    
+    @objc(application:openURL:sourceApplication:annotation:) func application(_ application: UIApplication, open url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
+    {
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+    }
 
 }
 

@@ -74,7 +74,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="FWI-C8-ERS">
                                 <rect key="frame" x="50" y="79" width="501" height="501"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWx-yZ-7DP">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWx-yZ-7DP" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="20" y="444" width="560" height="56"/>
                                 <color key="backgroundColor" red="0.34120232891591096" green="0.46790222205266452" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -83,9 +83,6 @@
                                 <state key="normal" title="SIGN IN WITH FACEBOOK">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="bW0-se-pbZ" kind="show" id="s20-Tq-oc0"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Todolist-iOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84A-om-EZ7">
                                 <rect key="frame" x="176.5" y="50" width="248.5" height="29"/>
@@ -108,11 +105,12 @@
                     <connections>
                         <outlet property="facebookButton" destination="IWx-yZ-7DP" id="2vG-9K-0IL"/>
                         <outlet property="welcomeLabel" destination="84A-om-EZ7" id="gct-Ob-PKO"/>
+                        <segue destination="bW0-se-pbZ" kind="presentation" identifier="todolist" modalTransitionStyle="crossDissolve" id="ECd-6E-H0R"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nJB-zZ-jVz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-487" y="399"/>
+            <point key="canvasLocation" x="-399" y="399"/>
         </scene>
         <!--Add item-->
         <scene sceneID="g0g-wK-rD3">
@@ -158,6 +156,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OrL-QE-wX4">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bW0-se-pbZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d8H-Tu-ypi">
@@ -169,7 +168,6 @@
                         <segue destination="IiY-dc-GbL" kind="relationship" relationship="rootViewController" id="Gxq-3w-Z7C"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="341" y="399"/>
         </scene>
