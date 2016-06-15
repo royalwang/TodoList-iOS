@@ -13,4 +13,9 @@ struct TodoItem {
     let title: String
     var completed: Bool
     let order: Int
+    
+    var jsonRepresentation : String {
+        return "{\"title\":\"\(title)\",\"completed\":\"\(completed)\",\"order\":\"\(order)\"}"
+    }
+    
 }

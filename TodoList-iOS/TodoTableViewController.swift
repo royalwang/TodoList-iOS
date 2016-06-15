@@ -19,11 +19,13 @@ class TodoTableViewController: UITableViewController {
     
     var dataTask: NSURLSessionTask?
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.viewDidLoad()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         downloadTodoList()
-        // self.tableView.isEditing = true
     }
     
     // Setup TableView
@@ -129,10 +131,7 @@ class TodoTableViewController: UITableViewController {
     func updateTable(_ data: NSData?) {
         do {
             let json = try NSJSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-            print("json",json)
             todoItems = parseTodoList(json: json)
-            
-            print(todoItems)
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.tableView.reloadData()
@@ -180,7 +179,5 @@ class TodoTableViewController: UITableViewController {
         
         return todos
     }
-    
-    
-    
+        
 }
