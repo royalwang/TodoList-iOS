@@ -11,6 +11,6 @@ import Foundation
 struct TodoItem {
     
     let title: String
-    let completed: Bool
+    var completed: Bool
     let order: Int
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bW0-se-pbZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8NE-Cq-Wxh">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,20 +11,20 @@
         <scene sceneID="8T3-VT-xKh">
             <objects>
                 <tableViewController id="IiY-dc-GbL" customClass="TodoTableViewController" customModule="TodoList_iOS" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rxv-Y7-hPI">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="Rxv-Y7-hPI">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" textLabel="Ua5-SS-fG9" style="IBUITableViewCellStyleDefault" id="bQy-Qw-hig">
-                                <rect key="frame" x="0.0" y="114" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bQy-Qw-hig" id="Z8W-fc-ZDu">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ua5-SS-fG9">
-                                            <rect key="frame" x="15" y="0.0" width="570" height="43"/>
+                                            <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -49,7 +49,7 @@
                             </barButtonItem>
                             <barButtonItem title="Edit" id="JLK-gO-MRz">
                                 <connections>
-                                    <action selector="onEditClicked:" destination="IiY-dc-GbL" id="Nlg-GQ-uT9"/>
+                                    <action selector="onEditClickedWithSender:" destination="IiY-dc-GbL" id="HF5-vh-DJm"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -58,6 +58,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ieR-JF-cWc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1027" y="405"/>
+        </scene>
+        <!--Login View Controller-->
+        <scene sceneID="J7k-aZ-dsl">
+            <objects>
+                <viewController storyboardIdentifier="loginVC" id="8NE-Cq-Wxh" customClass="LoginViewController" customModule="TodoList_iOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hwE-bp-arW"/>
+                        <viewControllerLayoutGuide type="bottom" id="Psc-I1-BtO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="mos-uw-wcL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="FWI-C8-ERS">
+                                <rect key="frame" x="50" y="79" width="501" height="501"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IWx-yZ-7DP">
+                                <rect key="frame" x="20" y="444" width="560" height="56"/>
+                                <color key="backgroundColor" red="0.34120232891591096" green="0.46790222205266452" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="q8x-FU-mQu"/>
+                                </constraints>
+                                <state key="normal" title="SIGN IN WITH FACEBOOK">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="bW0-se-pbZ" kind="show" id="s20-Tq-oc0"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Todolist-iOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="84A-om-EZ7">
+                                <rect key="frame" x="176.5" y="50" width="248.5" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="84A-om-EZ7" firstAttribute="top" secondItem="mos-uw-wcL" secondAttribute="topMargin" constant="50" id="QWh-WS-yaA"/>
+                            <constraint firstItem="IWx-yZ-7DP" firstAttribute="leading" secondItem="mos-uw-wcL" secondAttribute="leadingMargin" id="RkK-RO-aMd"/>
+                            <constraint firstItem="Psc-I1-BtO" firstAttribute="top" secondItem="IWx-yZ-7DP" secondAttribute="bottom" constant="100" id="SJg-ZN-Fss"/>
+                            <constraint firstItem="IWx-yZ-7DP" firstAttribute="centerX" secondItem="84A-om-EZ7" secondAttribute="centerX" id="SS8-lq-8pU"/>
+                            <constraint firstItem="FWI-C8-ERS" firstAttribute="centerX" secondItem="mos-uw-wcL" secondAttribute="centerX" id="iU9-eU-Xbd"/>
+                            <constraint firstItem="84A-om-EZ7" firstAttribute="centerX" secondItem="mos-uw-wcL" secondAttribute="centerX" id="wUX-lU-cQg"/>
+                            <constraint firstItem="FWI-C8-ERS" firstAttribute="top" secondItem="84A-om-EZ7" secondAttribute="bottom" id="xUk-9m-BAg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="facebookButton" destination="IWx-yZ-7DP" id="2vG-9K-0IL"/>
+                        <outlet property="welcomeLabel" destination="84A-om-EZ7" id="gct-Ob-PKO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nJB-zZ-jVz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-487" y="399"/>
         </scene>
         <!--Add item-->
         <scene sceneID="g0g-wK-rD3">
@@ -88,10 +143,13 @@
                         <barButtonItem key="backBarButtonItem" title="Back" id="tsP-If-QUX"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="zpW-Io-ZaJ">
                             <connections>
-                                <action selector="onDoneClicked:" destination="xZT-0Q-cJ2" id="6Oy-KM-8JA"/>
+                                <action selector="onDoneClickedWithSender:" destination="xZT-0Q-cJ2" id="Gg8-Dg-pbu"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="textField" destination="eEg-Lx-elJ" id="8xN-7m-Xec"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z8k-l1-WbW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -113,7 +171,10 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="215" y="405"/>
+            <point key="canvasLocation" x="341" y="399"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo.png" width="501" height="501"/>
+    </resources>
 </document>

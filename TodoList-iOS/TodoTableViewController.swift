@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+//import Credentials
+
 
 class TodoTableViewController: UITableViewController {
     
@@ -24,25 +26,82 @@ class TodoTableViewController: UITableViewController {
         // self.tableView.isEditing = true
     }
     
-   
-    @IBAction func onEditClicked(sender: AnyObject) {
-        self.tableView.isEditing = true      
-    }
+    // Setup TableView
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todoItems.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) 
+        
+        todoItems.sort(isOrderedBefore: { $0.order < $1.order })
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
         
         cell.textLabel?.text = todoItems[indexPath.row].title
+        
+        
+        // Handle Checkmarks
+        if (todoItems[indexPath.row].completed) {
+            cell.accessoryType = UITableViewCellAccessoryType.checkmark
+        }
+        else {
+            cell.accessoryType = UITableViewCellAccessoryType.none
+        }
         
         return cell
     }
     
+    
+    // Allows Movable Rows
+    
+    @IBAction func onEditClicked(sender: UIBarButtonItem) {
+        self.isEditing = !self.isEditing
+        
+    }
+    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: NSIndexPath, to destinationIndexPath: NSIndexPath) {
+        
+        let itemToMove = todoItems[sourceIndexPath.row]
+        todoItems.remove(at: destinationIndexPath.row)
+        todoItems.insert(itemToMove, at: sourceIndexPath.row)
+        
+    }
+    
+    // Allows boolean completion changing
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+
+        var item = todoItems[indexPath.row]
+        item.completed = !item.completed
+        
+        todoItems[indexPath.row].completed = !todoItems[indexPath.row].completed
+        
+        // Reload individual cell
+        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+        
+        //TODO: Update bluemix database
+    }
+    
+    // Allows row deletion
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: NSIndexPath) {
+        
+        if editingStyle == .delete {
+            todoItems.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+        
+    }
+    
+    
+    // Loads todolist from url
+    
     func downloadTodoList() {
-        let url = NSURL(string: "http://localhost:8090/")
+        let url = NSURL(string: "http://localhost:8090")//"http://todolist-sublunate-ectromelia.mybluemix.net")
         
         dataTask = defaultSession.dataTask(with: url!) {
             data, response, error in
@@ -57,6 +116,7 @@ class TodoTableViewController: UITableViewController {
             } else if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     self.updateTable(data)
+                    
                 }
             }
         }
@@ -67,10 +127,9 @@ class TodoTableViewController: UITableViewController {
     }
     
     func updateTable(_ data: NSData?) {
-        
         do {
             let json = try NSJSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-        
+            print("json",json)
             todoItems = parseTodoList(json: json)
             
             print(todoItems)
@@ -79,8 +138,8 @@ class TodoTableViewController: UITableViewController {
                 self.tableView.reloadData()
             })
             
-            //print(json)
         } catch {
+            print("Error")
             
         }
     }
