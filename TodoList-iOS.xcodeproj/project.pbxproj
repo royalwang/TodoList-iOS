@@ -17,6 +17,8 @@
 		E3A4A4221D0F54EA002F79E5 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A4A41F1D0F54EA002F79E5 /* FBSDKCoreKit.framework */; };
 		E3A4A4231D0F54EA002F79E5 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A4A4201D0F54EA002F79E5 /* FBSDKLoginKit.framework */; };
 		E3A4A4241D0F54EA002F79E5 /* FBSDKMessengerShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3A4A4211D0F54EA002F79E5 /* FBSDKMessengerShareKit.framework */; };
+		E3A4A4831D11EE43002F79E5 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A4A4811D11EE43002F79E5 /* Router.swift */; };
+		E3A4A4841D11EE43002F79E5 /* TodoItemDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A4A4821D11EE43002F79E5 /* TodoItemDataManager.swift */; };
 		E3ED01C01D0F08C400E8D22D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3ED01BF1D0F08C400E8D22D /* LoginViewController.swift */; };
 		E3ED01C21D0F08C900E8D22D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E3ED01C11D0F08C900E8D22D /* logo.png */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		E3A4A41F1D0F54EA002F79E5 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../FacebookSDKs-iOS-4.12.0/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		E3A4A4201D0F54EA002F79E5 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../FacebookSDKs-iOS-4.12.0/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		E3A4A4211D0F54EA002F79E5 /* FBSDKMessengerShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKMessengerShareKit.framework; path = "../../../FacebookSDKs-iOS-4.12.0/FBSDKMessengerShareKit.framework"; sourceTree = "<group>"; };
+		E3A4A4811D11EE43002F79E5 /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		E3A4A4821D11EE43002F79E5 /* TodoItemDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoItemDataManager.swift; sourceTree = "<group>"; };
 		E3ED01BF1D0F08C400E8D22D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		E3ED01C11D0F08C900E8D22D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -80,6 +84,8 @@
 				E16AE3641CE4C0FB00E20F62 /* LaunchScreen.storyboard */,
 				E3ED01BF1D0F08C400E8D22D /* LoginViewController.swift */,
 				E16AE3671CE4C0FB00E20F62 /* Info.plist */,
+				E3A4A4811D11EE43002F79E5 /* Router.swift */,
+				E3A4A4821D11EE43002F79E5 /* TodoItemDataManager.swift */,
 				E16AE36D1CE4CA2800E20F62 /* TodoTableViewController.swift */,
 				E16AE36F1CE4E39C00E20F62 /* TodoItem.swift */,
 			);
@@ -169,10 +175,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3A4A4841D11EE43002F79E5 /* TodoItemDataManager.swift in Sources */,
 				E16AE3721CE5202100E20F62 /* AddTodoViewController.swift in Sources */,
 				E16AE36E1CE4CA2800E20F62 /* TodoTableViewController.swift in Sources */,
 				E16AE3701CE4E39C00E20F62 /* TodoItem.swift in Sources */,
 				E3ED01C01D0F08C400E8D22D /* LoginViewController.swift in Sources */,
+				E3A4A4831D11EE43002F79E5 /* Router.swift in Sources */,
 				E16AE35C1CE4C0FB00E20F62 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
