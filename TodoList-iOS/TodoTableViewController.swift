@@ -84,7 +84,7 @@ class TodoTableViewController: UITableViewController {
         // Reload individual cell
         self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
         
-        //TODO: Update bluemix database
+        TodoItemDataManager.sharedInstance.update(id: todoItems[indexPath.row].id, item: todoItems[indexPath.row])
     }
     
     // Allows row deletion
@@ -92,8 +92,8 @@ class TodoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: NSIndexPath) {
         
         if editingStyle == .delete {
+            TodoItemDataManager.sharedInstance.delete(id: todoItems[indexPath.row].id)
             todoItems.remove(at: indexPath.row)
-            TodoItemDataManager.sharedInstance.delete(id: "ee35dad87f3b02272e55e22bf601781a")
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         }

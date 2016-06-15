@@ -11,7 +11,7 @@ import UIKit
 class Router: NSObject {
     let url = NSURL(string: "http://localhost:8090")
     
-    func HTTPGetJSON(url: String, callback: (Dictionary<String, AnyObject>, NSError?) -> Void) {
+    func HTTPGet(url: String, callback: (Dictionary<String, AnyObject>, NSError?) -> Void) {
         
         
         let session = NSURLSession.shared();
@@ -35,9 +35,9 @@ class Router: NSObject {
      // Task: Executes an HTTP POST request to the destination url
      // containing the given json serializable object
     
-    func HTTPPostJSON(url: String,
+    func HTTPPost(url: String,
                       jsonObj: AnyObject,
-                      callback: (Dictionary<String, AnyObject>, String?) -> Void) {
+                      callback: (NSData, NSError?) -> Void) {
         let session = NSURLSession.shared();
         let request : NSMutableURLRequest = NSMutableURLRequest();
         
@@ -53,15 +53,38 @@ class Router: NSObject {
                 UIApplication.shared().isNetworkActivityIndicatorVisible = false
             }
             
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            print(data)
+            callback(data!, error)
             
         };
         task.resume();
         
     }
+    
+    func HTTPPatch(url: String,
+                      jsonObj: AnyObject,
+                      callback: (NSData, NSError?) -> Void) {
+        let session = NSURLSession.shared();
+        let request : NSMutableURLRequest = NSMutableURLRequest();
+        
+        request.url = NSURL(string: url)!
+        request.httpMethod = "PATCH"
+        request.httpBody = jsonObj.data(using: NSUTF8StringEncoding)!
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTask(with: request as NSURLRequest) {
+            data, response, error in
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                UIApplication.shared().isNetworkActivityIndicatorVisible = false
+            }
+            
+            callback(data!, error)
+            
+        };
+        task.resume();
+        
+    }
+
     
     func HTTPDelete(url: String, callback: (String, String?) -> Void) {
         let session = NSURLSession.shared();

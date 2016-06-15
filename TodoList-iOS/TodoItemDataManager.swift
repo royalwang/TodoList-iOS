@@ -15,7 +15,7 @@ class TodoItemDataManager: NSObject {
     
     static let sharedInstance = TodoItemDataManager()
     
-    let baseURL = "http://localhost:8090"
+    let localURL = "http://localhost:8090"
     let bluemixURL = "http://todolist-unsputtering-imperialist.mybluemix.net"
     
     var dataTask: NSURLSessionTask?
@@ -30,29 +30,43 @@ class TodoItemDataManager: NSObject {
     
     
     // Store item in todolist
-    func store(item: TodoItem){
+    func store(title: String){
         
-        allTodos.append(item)  // Right now there is a delay that forces a refresh. This is temporary, since it does not validate
+        let json = "{\"title\":\"\(title)\",\"completed\":\"\(false)\",\"order\":\"\(TodoItemDataManager.sharedInstance.allTodos.count + 1)\"}"
         
-        router.HTTPPostJSON(url: bluemixURL, jsonObj: item.jsonRepresentation) {
-            dict, error in
-            print(dict,error)
+        router.HTTPPost(url: bluemixURL, jsonObj: json) {
+            data, error in
+            do {
+                let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                self.allTodos.append(self.parseItem(item: json)!)
+
+            } catch {
+                print("Error Storing Data")
+            }
+        }
+
+    }
+    
+    func delete(id: String) {
+        router.HTTPDelete(url: "\(bluemixURL)/todos/\(id)") {
+            data, error in
             
         }
     }
     
-    func delete(id: String) {
-        
-        router.HTTPDelete(url: "\(bluemixURL)/\(id)") {
+    func update(id: String, item: TodoItem) {
+        router.HTTPPatch(url: "\(bluemixURL)/todos/\(id)", jsonObj: item.jsonRepresentation) {
             data, error in
             print(data,error)
             
         }
+        
     }
-    func update(id: String, item: TodoItem) {
-        router.HTTPPostJSON(url: bluemixURL, jsonObj: item.jsonWithID(id: id)) {
-            dict, error in
-            print(dict,error)
+    
+    func get(id: String) {
+        router.HTTPGet(url: "\(bluemixURL)/todos/\(id)") {
+            data, error in
+            print(data,error)
             
         }
         
@@ -76,6 +90,7 @@ class TodoItemDataManager: NSObject {
                 if httpResponse.statusCode == 200 {
                     do {
                         let json = try NSJSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+                        //print(json)
                         self.parseTodoList(json: json)
                     } catch {
                         print("Error parsing data")
@@ -96,30 +111,45 @@ class TodoItemDataManager: NSObject {
         if let json = json as? [AnyObject] {
             for item in json {
                 
-                if let item = item as? [String: AnyObject] {
-                    
-                    let title = item["title"] as? String
-                    let completed = item["completed"] as? Bool
-                    let order = item["order"] as? Int
-                    
-                    guard let titleValue = title else {
-                        continue
-                    }
-                    
-                    guard let completedValue = completed else {
-                        continue
-                    }
-                    
-                    guard let orderValue = order else {
-                        continue
-                    }
-                    
-                    allTodos.append(TodoItem(title: titleValue, completed: completedValue, order: orderValue) )
-                                        
+                guard let todo = parseItem(item: item) else {
+                    continue
                 }
                 
+                allTodos.append(todo)
+                                        
             }
+                
         }
     }
     
+    private func parseItem(item: AnyObject) -> TodoItem? {
+        if let item = item as? [String: AnyObject] {
+            
+            let id    = item["id"] as? String
+            
+            let title = item["title"] as? String
+            let completed = item["completed"] as? Bool
+            let order = item["order"] as? Int
+            
+            /*guard let uid = id else {
+                
+            }
+            
+            guard let titleValue = title else {
+                
+            }
+            
+            guard let completedValue = completed else {
+                
+            }
+            
+            guard let orderValue = order else {
+                
+            }*/
+            
+            return TodoItem(id: id!, title: title!, completed: completed!, order: order!)
+        }
+        
+        return nil
+    }
 }

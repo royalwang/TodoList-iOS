@@ -10,6 +10,7 @@ import Foundation
 
 struct TodoItem {
     
+    let id: String
     let title: String
     var completed: Bool
     let order: Int

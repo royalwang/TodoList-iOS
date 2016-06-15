@@ -13,12 +13,8 @@ class AddTodoViewController: UIViewController {
     @IBOutlet var textField: UITextField!
     
     @IBAction func onDoneClicked(sender: UIButton) {
-
-
-        // Create New ToDoItem
-        let item = TodoItem(title: textField.text!, completed: false, order: TodoItemDataManager.sharedInstance.allTodos.count + 1)
         
-        TodoItemDataManager.sharedInstance.store(item: item)
+        TodoItemDataManager.sharedInstance.store(title: textField.text!)
 
         self.navigationController?.popViewController(animated: true)
     }
