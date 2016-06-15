@@ -18,4 +18,8 @@ struct TodoItem {
         return "{\"title\":\"\(title)\",\"completed\":\"\(completed)\",\"order\":\"\(order)\"}"
     }
     
+    func jsonWithID(id: String) -> String {
+        return "{\"id\":\"\(id)\",\"title\":\"\(title)\",\"completed\":\"\(completed)\",\"order\":\"\(order)\"}"
+    }
+    
 }

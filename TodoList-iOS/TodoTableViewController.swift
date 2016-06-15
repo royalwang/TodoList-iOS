@@ -15,17 +15,16 @@ class TodoTableViewController: UITableViewController {
     
     var todoItems = [TodoItem]()
     
-    let defaultSession = NSURLSession(configuration: NSURLSessionConfiguration.default())
-    
-    var dataTask: NSURLSessionTask?
-    
     override func viewDidAppear(_ animated: Bool) {
-        self.viewDidLoad()
+        TodoItemDataManager.sharedInstance.getAllTodos()
+        todoItems = todos()
+        updateTable(todoItems: todoItems)
+        
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        downloadTodoList()
+        todoItems = todos()
     }
     
     // Setup TableView
@@ -93,91 +92,22 @@ class TodoTableViewController: UITableViewController {
         
         if editingStyle == .delete {
             todoItems.remove(at: indexPath.row)
+            TodoItemDataManager.sharedInstance.delete(id: "ee35dad87f3b02272e55e22bf601781a")
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         }
         
     }
     
-    
-    // Loads todolist from url
-    
-    func downloadTodoList() {
-        let url = NSURL(string: "http://localhost:8090")//"http://todolist-sublunate-ectromelia.mybluemix.net")
-        
-        dataTask = defaultSession.dataTask(with: url!) {
-            data, response, error in
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                UIApplication.shared().isNetworkActivityIndicatorVisible = false
-            }
-            
-            if let error = error {
-                print(error.localizedDescription)
-                
-            } else if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    self.updateTable(data)
-                    
-                }
-            }
-        }
-        
-        dataTask?.resume()
-        
-        
+    func updateTable(todoItems: [TodoItem]) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
+
     }
     
-    func updateTable(_ data: NSData?) {
-        do {
-            let json = try NSJSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-            todoItems = parseTodoList(json: json)
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadData()
-            })
-            
-        } catch {
-            print("Error")
-            
-        }
-    }
-    
-    private func parseTodoList(json: AnyObject) -> [TodoItem] {
-        
-        var todos = [TodoItem]()
-        
-        if let json = json as? [AnyObject] {
-            
-            for item in json {
-                
-                if let item = item as? [String: AnyObject] {
-                    
-                    let title = item["title"] as? String
-                    let completed = item["completed"] as? Bool
-                    let order = item["order"] as? Int
-                    
-                    guard let titleValue = title else {
-                        continue
-                    }
-                    
-                    guard let completedValue = completed else {
-                        continue
-                    }
-                    
-                    guard let orderValue = order else {
-                        continue
-                    }
-                    
-                    todos.append( TodoItem(title: titleValue, completed: completedValue, order: orderValue) )
-                    
-                    
-                }
-                
-            }
-        }
-        
-        return todos
+    func todos() -> [TodoItem] {
+        return TodoItemDataManager.sharedInstance.allTodos
     }
         
 }
