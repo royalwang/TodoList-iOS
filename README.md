@@ -6,21 +6,6 @@ An example using the Kitura web framework and HTTP Server to develop a backend f
 
 > Supports the 05-03 SNAPSHOT.
 
-
-## Initial Setup : ##
-
-Make sure you are running at least XCode 7.3.
-
-1. Automatically generate an XCode project from the Package.swift within the todolist-ios folder:
-
-  `swift build -X`
-
-2. Open XCode project
-
-  `open TodoList.xcodeproj`
-
-3. Switch the toolchain to the open source version of Swift.
-
 ## Quick start for running locally
 
 1. Install the [05-03-DEVELOPMENT Swift toolchain](https://swift.org/download/)
@@ -31,7 +16,7 @@ Make sure you are running at least XCode 7.3.
 
     `brew install curl`
 
-3. Navigate to the TodoList-Server directory and Build/Run the TodoList Kitura backend
+3. Navigate to the `TodoList-Server` directory and Build/Run the TodoList Kitura backend
   - `build swift`
   - `./.build/debug/TodoList-Server`
 
