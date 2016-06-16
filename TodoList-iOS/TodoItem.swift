@@ -8,19 +8,23 @@
 
 import Foundation
 
-struct TodoItem {
+struct TodoItem: Comparable {
     
     let id: String
     let title: String
     var completed: Bool
-    let order: Int
+    var order: Int
     
     var jsonRepresentation : String {
         return "{\"title\":\"\(title)\",\"completed\":\"\(completed)\",\"order\":\"\(order)\"}"
     }
     
-    func jsonWithID(id: String) -> String {
-        return "{\"id\":\"\(id)\",\"title\":\"\(title)\",\"completed\":\"\(completed)\",\"order\":\"\(order)\"}"
-    }
-    
+}
+
+func < (lhs: TodoItem, rhs: TodoItem) -> Bool {
+    return lhs.order < rhs.order
+}
+
+func == (lhs: TodoItem, rhs: TodoItem) -> Bool {
+    return lhs.order == rhs.order
 }

@@ -36,29 +36,33 @@ class TodoItemDataManager: NSObject {
         
         router.HTTPPost(url: bluemixURL, jsonObj: json) {
             data, error in
-            do {
-                let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
-                self.allTodos.append(self.parseItem(item: json)!)
+            if error != nil { print(error?.localizedDescription) }
+            else {
+                do {
+                    let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    self.allTodos.append(self.parseItem(item: json)!)
 
-            } catch {
-                print("Error Storing Data")
+                } catch { print("Error Storing Data") }
             }
         }
 
     }
     
-    func delete(id: String) {
+    func delete(at: NSIndexPath) {
+        
+        let id = allTodos[at.row].id
+        TodoItemDataManager.sharedInstance.allTodos.remove(at: at.row)
+        
         router.HTTPDelete(url: "\(bluemixURL)/todos/\(id)") {
             data, error in
-            
+            if error != nil { print(error?.localizedDescription) }
         }
     }
     
     func update(id: String, item: TodoItem) {
         router.HTTPPatch(url: "\(bluemixURL)/todos/\(id)", jsonObj: item.jsonRepresentation) {
             data, error in
-            print(data,error)
-            
+            if error != nil { print(error?.localizedDescription) }
         }
         
     }
@@ -66,56 +70,39 @@ class TodoItemDataManager: NSObject {
     func get(id: String) {
         router.HTTPGet(url: "\(bluemixURL)/todos/\(id)") {
             data, error in
-            print(data,error)
-            
+            if error != nil { print(error?.localizedDescription) }
         }
         
     }
     // Loads todolist from url
     
     func getAllTodos() {
-        let url = NSURL(string: bluemixURL)
+        //let url = NSURL(string: bluemixURL)
         
-        dataTask = defaultSession.dataTask(with: url!) {
-            data, response, error in
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                UIApplication.shared().isNetworkActivityIndicatorVisible = false
-            }
-            
-            if let error = error {
-                print(error.localizedDescription)
-                
-            } else if let httpResponse = response as? NSHTTPURLResponse {
-                if httpResponse.statusCode == 200 {
-                    do {
-                        let json = try NSJSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-                        //print(json)
-                        self.parseTodoList(json: json)
-                    } catch {
-                        print("Error parsing data")
-                    }
+        router.HTTPGet(url: bluemixURL) {
+            data, error in
+                do {
+                    let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    self.parseTodoList(json: json)
+                } catch {
+                    print("Error parsing data")
                 }
             }
         }
-        
-        dataTask?.resume()
-        
-        
-    }
     
     private func parseTodoList(json: AnyObject){
         
         allTodos.removeAll()
         
         if let json = json as? [AnyObject] {
+
             for item in json {
                 
                 guard let todo = parseItem(item: item) else {
                     continue
                 }
                 
-                allTodos.append(todo)
+                insertSorted(seq: &allTodos, newItem: todo)
                                         
             }
                 
@@ -125,31 +112,34 @@ class TodoItemDataManager: NSObject {
     private func parseItem(item: AnyObject) -> TodoItem? {
         if let item = item as? [String: AnyObject] {
             
-            let id    = item["id"] as? String
-            
-            let title = item["title"] as? String
+            let id        = item["id"] as? String
+            let title     = item["title"] as? String
             let completed = item["completed"] as? Bool
-            let order = item["order"] as? Int
+            let order     = item["order"] as? Int
             
-            /*guard let uid = id else {
+            guard let uid = id,
+                  let titleValue = title,
+                  let completedValue = completed,
+                  let orderValue = order else {
                 
+                    return nil
             }
+
             
-            guard let titleValue = title else {
-                
-            }
-            
-            guard let completedValue = completed else {
-                
-            }
-            
-            guard let orderValue = order else {
-                
-            }*/
-            
-            return TodoItem(id: id!, title: title!, completed: completed!, order: order!)
+            return TodoItem(id: uid, title: titleValue, completed: completedValue, order: orderValue)
         }
         
         return nil
+    }
+    
+    func insertSorted<T: Comparable>( seq: inout [T], newItem item: T) {
+        let index = seq.reduce(0) { $1 < item ? $0 + 1 : $0 }
+        seq.insert(item, at: index)
+    }
+    
+    func move(at: NSIndexPath, to: NSIndexPath) {
+        let itemToMove = allTodos[at.row]
+        allTodos.remove(at: at.row)
+        allTodos.insert(itemToMove, at: to.row)
     }
 }

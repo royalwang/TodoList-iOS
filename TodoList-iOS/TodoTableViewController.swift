@@ -14,37 +14,32 @@ import UIKit
 
 class TodoTableViewController: UITableViewController {
     
-    var todoItems = [TodoItem]()
     
     override func viewDidAppear(_ animated: Bool) {
         TodoItemDataManager.sharedInstance.getAllTodos()
-        todoItems = todos()
-        updateTable(todoItems: todoItems)
+        updateTable(todoItems: todos())
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        todoItems = todos()
     }
     
     // Setup TableView
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todoItems.count
+        return todos().count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         
-        todoItems.sort(isOrderedBefore: { $0.order < $1.order })
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
         
-        cell.textLabel?.text = todoItems[indexPath.row].title
+        cell.textLabel?.text = todos()[indexPath.row].title
         
         
         // Handle Checkmarks
-        if (todoItems[indexPath.row].completed) {
+        if (todos()[indexPath.row].completed) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }
         else {
@@ -66,34 +61,38 @@ class TodoTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: NSIndexPath, to destinationIndexPath: NSIndexPath) {
         
-        let itemToMove = todoItems[sourceIndexPath.row]
-        todoItems.remove(at: destinationIndexPath.row)
-        todoItems.insert(itemToMove, at: sourceIndexPath.row)
+        var itemToMove = todos()[sourceIndexPath.row]
+        TodoItemDataManager.sharedInstance.move(at: destinationIndexPath, to: sourceIndexPath)
+        
+        // Update order on bluemix
+        itemToMove.order = todos()[destinationIndexPath.row].order
+        TodoItemDataManager.sharedInstance.update(id: itemToMove.id, item: itemToMove)
         
     }
     
-    // Allows boolean completion changing
+    // Allows Completion Marking
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
-
-        var item = todoItems[indexPath.row]
-        item.completed = !item.completed
         
-        todoItems[indexPath.row].completed = !todoItems[indexPath.row].completed
+        TodoItemDataManager.sharedInstance.allTodos[indexPath.row].completed = !todos()[indexPath.row].completed
         
         // Reload individual cell
-        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.none)
+        self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         
-        TodoItemDataManager.sharedInstance.update(id: todoItems[indexPath.row].id, item: todoItems[indexPath.row])
+        // Completed Rows are removed upon completion update
+        TodoItemDataManager.sharedInstance.update(id: todos()[indexPath.row].id, item: todos()[indexPath.row])
+        TodoItemDataManager.sharedInstance.allTodos.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
     
-    // Allows row deletion
+    // Allows Row Deletion
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: NSIndexPath) {
         
         if editingStyle == .delete {
-            TodoItemDataManager.sharedInstance.delete(id: todoItems[indexPath.row].id)
-            todoItems.remove(at: indexPath.row)
+            
+            TodoItemDataManager.sharedInstance.delete(at: indexPath)
+            
             tableView.deleteRows(at: [indexPath], with: .fade)
             
         }

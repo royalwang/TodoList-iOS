@@ -17,7 +17,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "KituraTodoList",
+    name: "TodoList-Server",
     dependencies: [
         .Package(url: "https://github.com/IBM-Swift/todolist-couchdb.git", majorVersion: 0, minor: 1),
         .Package(url: "https://github.com/IBM-Swift/Kitura.git", majorVersion: 0, minor: 16),
