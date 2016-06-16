@@ -7,7 +7,7 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
-        <!--My Todo List-->
+        <!--Todo Table View Controller-->
         <scene sceneID="8T3-VT-xKh">
             <objects>
                 <tableViewController id="IiY-dc-GbL" customClass="TodoTableViewController" customModule="TodoList_iOS" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,7 +40,19 @@
                             <outlet property="delegate" destination="IiY-dc-GbL" id="kBL-ZW-JHV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="My Todo List" id="QTX-Yx-Ckz">
+                    <navigationItem key="navigationItem" id="QTX-Yx-Ckz">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="LrR-rl-cTw">
+                            <rect key="frame" x="239.5" y="7" width="121" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Todo"/>
+                                <segment title="All"/>
+                            </segments>
+                            <connections>
+                                <action selector="segmentedControlActionChangedWithSender:" destination="IiY-dc-GbL" eventType="valueChanged" id="ZWw-Hs-wCI"/>
+                            </connections>
+                        </segmentedControl>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="Hfw-Wv-IkQ">
                                 <connections>
@@ -54,8 +66,19 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <outlet property="mySegmentedControl" destination="LrR-rl-cTw" id="rXy-JS-StR"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ieR-JF-cWc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="y3e-Js-b8G">
+                    <rect key="frame" x="0.0" y="0.0" width="121" height="29"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <segments>
+                        <segment title="First"/>
+                        <segment title="Second"/>
+                    </segments>
+                </segmentedControl>
             </objects>
             <point key="canvasLocation" x="1027" y="405"/>
         </scene>
@@ -156,6 +179,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OrL-QE-wX4">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bW0-se-pbZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d8H-Tu-ypi">
@@ -167,7 +191,6 @@
                         <segue destination="IiY-dc-GbL" kind="relationship" relationship="rootViewController" id="Gxq-3w-Z7C"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="341" y="399"/>
         </scene>

@@ -14,6 +14,7 @@ import UIKit
 
 class TodoTableViewController: UITableViewController {
     
+    @IBOutlet weak var mySegmentedControl: UISegmentedControl!
     
     override func viewDidAppear(_ animated: Bool) {
         TodoItemDataManager.sharedInstance.getAllTodos()
@@ -25,11 +26,18 @@ class TodoTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
+    
+    @IBAction func segmentedControlActionChanged(sender: AnyObject) {
+        tableView.reloadData()
+    }
+    
     // Setup TableView
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todos().count
     }
+    
+    // Handle Checkmarks
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -38,7 +46,6 @@ class TodoTableViewController: UITableViewController {
         cell.textLabel?.text = todos()[indexPath.row].title
         
         
-        // Handle Checkmarks
         if (todos()[indexPath.row].completed) {
             cell.accessoryType = UITableViewCellAccessoryType.checkmark
         }
@@ -60,14 +67,22 @@ class TodoTableViewController: UITableViewController {
         return true
     }
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: NSIndexPath, to destinationIndexPath: NSIndexPath) {
+
+        TodoItemDataManager.sharedInstance.move(at: sourceIndexPath, to: destinationIndexPath)
         
-        var itemToMove = todos()[sourceIndexPath.row]
-        TodoItemDataManager.sharedInstance.move(at: destinationIndexPath, to: sourceIndexPath)
-        
-        // Update order on bluemix
-        itemToMove.order = todos()[destinationIndexPath.row].order
-        TodoItemDataManager.sharedInstance.update(id: itemToMove.id, item: itemToMove)
-        
+    }
+    
+    // Hides Completed Rows When looking at todos
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: NSIndexPath) -> CGFloat {
+        if mySegmentedControl.selectedSegmentIndex == 0 {
+            if todos()[indexPath.row].completed {
+                return 0
+            }
+            return 50
+        }
+        return 50
+
     }
     
     // Allows Completion Marking
@@ -76,13 +91,10 @@ class TodoTableViewController: UITableViewController {
         
         TodoItemDataManager.sharedInstance.allTodos[indexPath.row].completed = !todos()[indexPath.row].completed
         
-        // Reload individual cell
         self.tableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         
-        // Completed Rows are removed upon completion update
-        TodoItemDataManager.sharedInstance.update(id: todos()[indexPath.row].id, item: todos()[indexPath.row])
-        TodoItemDataManager.sharedInstance.allTodos.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
+        TodoItemDataManager.sharedInstance.update(item: todos()[indexPath.row])
+        
     }
     
     // Allows Row Deletion
@@ -105,7 +117,7 @@ class TodoTableViewController: UITableViewController {
         })
 
     }
-    
+    // TODO: Figure out how to do switching.
     func todos() -> [TodoItem] {
         return TodoItemDataManager.sharedInstance.allTodos
     }

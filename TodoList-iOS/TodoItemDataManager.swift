@@ -59,8 +59,8 @@ class TodoItemDataManager: NSObject {
         }
     }
     
-    func update(id: String, item: TodoItem) {
-        router.HTTPPatch(url: "\(bluemixURL)/todos/\(id)", jsonObj: item.jsonRepresentation) {
+    func update(item: TodoItem) {
+        router.HTTPPatch(url: "\(bluemixURL)/todos/\(item.id)", jsonObj: item.jsonRepresentation) {
             data, error in
             if error != nil { print(error?.localizedDescription) }
         }
@@ -81,14 +81,17 @@ class TodoItemDataManager: NSObject {
         
         router.HTTPGet(url: bluemixURL) {
             data, error in
+            if error != nil { print(error?.localizedDescription) }
+            else {
                 do {
                     let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
                     self.parseTodoList(json: json)
-                } catch {
-                    print("Error parsing data")
+                } catch let error as NSError {
+                    print(error.localizedDescription)
                 }
             }
         }
+    }
     
     private func parseTodoList(json: AnyObject){
         
@@ -138,8 +141,15 @@ class TodoItemDataManager: NSObject {
     }
     
     func move(at: NSIndexPath, to: NSIndexPath) {
-        let itemToMove = allTodos[at.row]
+        
+        var itemToMove = allTodos[at.row]
+        
+        itemToMove.order = allTodos[to.row].order
+        
         allTodos.remove(at: at.row)
         allTodos.insert(itemToMove, at: to.row)
+        
+        // Update order on bluemix
+        TodoItemDataManager.sharedInstance.update(item: itemToMove)
     }
 }

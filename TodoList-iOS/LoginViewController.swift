@@ -50,18 +50,20 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
 
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        
+
         FBSDKGraphRequest.init(graphPath: "me",
-                               parameters: ["fields":"first_name, last_name, email"]).start { (connection, result, error) -> Void in
-            // Process error
+                               parameters: ["fields":"id, first_name, last_name, email"]).start { (connection, result, error) -> Void in
+            
+                                // Check error condition or save user Data
             if ((error) != nil) {
-                print("Error: \(error)")
+                print(error.localizedDescription)
             } else {
-                let first: String = (result.objectFor("first_name") as? String)!
-                let last: String = (result.objectFor("last_name") as? String)!
-                let email: String = (result.objectFor("email") as? String)!
-                print("Hi", first,last, email)
-                self.welcomeLabel.text = "Welcome, \(first) \(last)"
+                
+                User.facebookUserId = (result.objectFor("id") as? String)!
+                User.fullName = (result.objectFor("first_name") as? String)! + " " + (result.objectFor("last_name") as? String)!
+                User.email = (result.objectFor("email") as? String)!
+
+                self.welcomeLabel.text = "Welcome, \(User.fullName)"
                 
             }
                                 
@@ -71,7 +73,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
     }
     
-    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){}
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!){
+        for key in Array(NSUserDefaults.standard().dictionaryRepresentation().keys) {
+            NSUserDefaults.standard().removeObject(forKey: key)
+        }
+    
+    }
 
     /*
     // MARK: - Navigation
