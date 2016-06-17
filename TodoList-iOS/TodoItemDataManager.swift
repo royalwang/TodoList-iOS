@@ -15,8 +15,8 @@ class TodoItemDataManager: NSObject {
     
     static let sharedInstance = TodoItemDataManager()
     
-    let localURL = "http://localhost:8090"
-    let bluemixURL = "http://todolist-unsputtering-imperialist.mybluemix.net"
+    let bluemixURL = "http://localhost:8090"
+    //let bluemixURL = "http://todolist-unsputtering-imperialist.mybluemix.net"
     
     var dataTask: NSURLSessionTask?
     let defaultSession = NSURLSession(configuration: NSURLSessionConfiguration.default())
@@ -67,17 +67,30 @@ class TodoItemDataManager: NSObject {
         
     }
     
-    func get(id: String) {
+    func get(id: String) -> TodoItem? {
+        
+        var item: TodoItem? = nil
+        
         router.HTTPGet(url: "\(bluemixURL)/todos/\(id)") {
             data, error in
             if error != nil { print(error?.localizedDescription) }
+            else {
+                do {
+                    let json = try NSJSONSerialization.jsonObject(with: data, options: .mutableContainers)
+                    item = self.parseItem(item: json)
+                } catch let error as NSError {
+                    print(error.localizedDescription)
+                }
+            }
         }
         
+        return item
+        
     }
+    
     // Loads todolist from url
     
     func getAllTodos() {
-        //let url = NSURL(string: bluemixURL)
         
         router.HTTPGet(url: bluemixURL) {
             data, error in

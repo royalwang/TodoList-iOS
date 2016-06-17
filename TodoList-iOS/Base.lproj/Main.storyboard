@@ -147,7 +147,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eEg-Lx-elJ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="What needs to be done?" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eEg-Lx-elJ">
                                 <rect key="frame" x="18" y="72" width="565" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -179,7 +179,6 @@
         <!--Navigation Controller-->
         <scene sceneID="OrL-QE-wX4">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bW0-se-pbZ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d8H-Tu-ypi">
@@ -191,6 +190,7 @@
                         <segue destination="IiY-dc-GbL" kind="relationship" relationship="rootViewController" id="Gxq-3w-Z7C"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HnU-td-1xk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="341" y="399"/>
         </scene>
