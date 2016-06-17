@@ -15,8 +15,8 @@ class TodoItemDataManager: NSObject {
     
     static let sharedInstance = TodoItemDataManager()
     
-    let bluemixURL = "http://localhost:8090"
-    //let bluemixURL = "http://todolist-unsputtering-imperialist.mybluemix.net"
+    let localURL = "http://localhost:8090"
+    let bluemixURL = "http://todolist-unsputtering-imperialist.mybluemix.net"
     
     var dataTask: NSURLSessionTask?
     let defaultSession = NSURLSession(configuration: NSURLSessionConfiguration.default())
