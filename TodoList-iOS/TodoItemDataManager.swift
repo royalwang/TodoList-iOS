@@ -21,7 +21,7 @@ protocol TodoItemsDelegate {
     func onItemsAddedToList()
 }
 
-enum DataMangerError: ErrorProtocol {
+enum DataMangerError: Error {
     case CannotSerializeToJSON
     case DataNotFound
 }
@@ -211,9 +211,9 @@ extension TodoItemDataManager {
             let order     = item["order"] as? Int
 
             guard let uid = id,
-                      titleValue = title,
-                      completedValue = completed,
-                      orderValue = order else {
+                      let titleValue = title,
+                      let completedValue = completed,
+                      let orderValue = order else {
 
                     return nil
             }
