@@ -17,15 +17,24 @@
 import UIKit
 import FBSDKLoginKit
 
+//
+//  AppDelegate.swift
+//  TestAppDelegate
+//
+//  Created by Chia Huang on 9/9/16.
+//  Copyright © 2016 Chia Huang. All rights reserved.
+//
+
+import UIKit
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    @objc(application:didFinishLaunchingWithOptions:)
-        func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
         // Set Themes and Styling
         ThemeManager.setupStyling()
         let theme = ThemeManager.currentTheme()
@@ -34,47 +43,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    @objc(applicationWillResignActive:)
-        func applicationWillResignActive(_ application: UIApplication) {
-        /* Sent when the application is about to move from active to inactive state.
-         This can occur for certain types of temporary interruptions (such as an incoming
-         phone call or SMS message) or when the user quits the application and it begins
-         the transition to the background state.
+    func applicationWillResignActive(_ application: UIApplication) {
 
-         Use this method to pause ongoing tasks, disable timers, and throttle
-         down OpenGL ES frame rates. Games should use this method to pause the game. */
     }
 
-    @objc(applicationDidEnterBackground:)
-        func applicationDidEnterBackground(_ application: UIApplication) {
-        /* Use this method to release shared resources, save user data, invalidate
-         timers, and store enough application state information to restore your
-         application to its current state in case it is terminated later.
-         If your application supports background execution, this method is
-         called instead of applicationWillTerminate: when the user quits. */
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        
     }
 
-    @objc(applicationWillEnterForeground:)
-        func applicationWillEnterForeground(_ application: UIApplication) {
-        /* Called as part of the transition from the background to the inactive state;
-         here you can undo many of the changes made on entering the background. */
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        
     }
 
-    @objc(applicationDidBecomeActive:)
-        func applicationDidBecomeActive(_ application: UIApplication) {
-        /* Restart any tasks that were paused (or not yet started)
-         while the application was inactive. If the application was
-         previously in the background, optionally refresh the user interface. */
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        
     }
 
-    @objc(applicationWillTerminate:) func applicationWillTerminate(_ application: UIApplication) {
-        /* Called when the application is about to terminate.
-         Save data if appropriate. See also applicationDidEnterBackground:. */
+    func applicationWillTerminate(_ application: UIApplication) {
     }
 
-    @objc(application:willFinishLaunchingWithOptions:)
-        func application(_ application: UIApplication,
-                     willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)
+    private func application(_ application: UIApplication,
+                             willFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?)
         -> Bool {
             // Override point for customization after application launch.
             return FBSDKApplicationDelegate.sharedInstance()
@@ -89,11 +78,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         loginManager.logOut()
     }
 
-    @objc(application:openURL:sourceApplication:annotation:)
-        func application(_ application: UIApplication,
-                     open url: NSURL,
-                     sourceApplication: String?,
-                     annotation: AnyObject) -> Bool {
+    private func application(_ application: UIApplication,
+                             open url: URL,
+                             sourceApplication: String?,
+                             annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance()
             .application(application,
                          open: url,
@@ -101,3 +89,61 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                          annotation: annotation)
     }
 }
+
+//
+//
+//@UIApplicationMain
+//class AppDelegate: UIResponder, UIApplicationDelegate {
+//
+//    var window: UIWindow?
+//
+//    @objc(application:didFinishLaunchingWithOptions:)
+//        private func application(_ application: UIApplication,
+//                     didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+//
+//        // Set Themes and Styling
+//        ThemeManager.setupStyling()
+//        let theme = ThemeManager.currentTheme()
+//        ThemeManager.applyTheme(theme: theme)
+//
+//        return true
+//    }
+//
+//    @objc(applicationWillResignActive:)
+//        func applicationWillResignActive(_ application: UIApplication) {
+//        /* Sent when the application is about to move from active to inactive state.
+//         This can occur for certain types of temporary interruptions (such as an incoming
+//         phone call or SMS message) or when the user quits the application and it begins
+//         the transition to the background state.
+//
+//         Use this method to pause ongoing tasks, disable timers, and throttle
+//         down OpenGL ES frame rates. Games should use this method to pause the game. */
+//    }
+//
+//    @objc(applicationDidEnterBackground:)
+//        func applicationDidEnterBackground(_ application: UIApplication) {
+//        /* Use this method to release shared resources, save user data, invalidate
+//         timers, and store enough application state information to restore your
+//         application to its current state in case it is terminated later.
+//         If your application supports background execution, this method is
+//         called instead of applicationWillTerminate: when the user quits. */
+//    }
+//
+//    @objc(applicationWillEnterForeground:)
+//        func applicationWillEnterForeground(_ application: UIApplication) {
+//        /* Called as part of the transition from the background to the inactive state;
+//         here you can undo many of the changes made on entering the background. */
+//    }
+//
+//    @objc(applicationDidBecomeActive:)
+//        func applicationDidBecomeActive(_ application: UIApplication) {
+//        /* Restart any tasks that were paused (or not yet started)
+//         while the application was inactive. If the application was
+//         previously in the background, optionally refresh the user interface. */
+//    }
+//
+//    @objc(applicationWillTerminate:) func applicationWillTerminate(_ application: UIApplication) {
+//        /* Called when the application is about to terminate.
+//         Save data if appropriate. See also applicationDidEnterBackground:. */
+//    }
+//}

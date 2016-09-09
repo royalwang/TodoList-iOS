@@ -47,10 +47,10 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     func tableView(_ tableView: UITableView,
-                            cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell",
-                                                for: indexPath) as UITableViewCell
+                                                for: indexPath as IndexPath) as UITableViewCell
 
         cell.frame = CGRect(x: 0,
                             y: 0,
@@ -68,8 +68,8 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
 
     // Allows Completion Marking
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         tableView.reloadData()
     }
 }

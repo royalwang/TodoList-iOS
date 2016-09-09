@@ -35,7 +35,7 @@ class BluemixConfiguration: NSObject {
 
     override init() {
 
-        if let path = NSBundle.main().pathForResource(kBluemixKeysPlistName, ofType: "plist"),
+        if let path = Bundle.main.path(forResource: kBluemixKeysPlistName, ofType: "plist"),
                let plist = NSDictionary(contentsOfFile: path),
                let isLocal              = plist[kIsLocalKey] as? Bool,
                let appGUID              = plist[kBluemixAppGUIDKey] as? String,

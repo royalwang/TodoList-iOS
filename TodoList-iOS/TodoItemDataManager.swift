@@ -51,7 +51,7 @@ extension TodoItemDataManager {
         let json = self.json(withTitle: withTitle,
                              order: TodoItemDataManager.sharedInstance.allTodos[0].count + 1)
 
-        router.onPost(url: getBaseRequestURL(), jsonString: json) {
+        router.onPost(url: getBaseRequestURL(), jsonString: json as AnyObject) {
             response, error in
 
             if error != nil {
@@ -64,9 +64,9 @@ extension TodoItemDataManager {
                 }
 
                 do {
-                    let json = try NSJSONSerialization.jsonObject(with: data,
+                    let json = try JSONSerialization.jsonObject(with: data,
                                                                   options: .mutableContainers)
-                    self.allTodos[0].append(self.parseItem(item: json)!)
+                    self.allTodos[0].append(self.parseItem(item: json as AnyObject)!)
 
                     self.delegate?.onItemsAddedToList()
 
@@ -92,7 +92,7 @@ extension TodoItemDataManager {
 
     func update(item: TodoItem) {
         router.onPatch(url: "\(getBaseRequestURL())/api/todos/\(item.id)",
-                       jsonString: item.jsonRepresentation) {
+                       jsonString: item.jsonRepresentation as AnyObject) {
             response, error in
 
             if error != nil { print(error?.localizedDescription) }
@@ -138,11 +138,12 @@ extension TodoItemDataManager {
                 }
 
                 do {
-                    let json = try NSJSONSerialization.jsonObject(with: data,
+                    let json = try JSONSerialization.jsonObject(with: data,
                                                                   options: .mutableContainers)
-                    item = self.parseItem(item: json)
+                    item = self.parseItem(item: json as AnyObject)
 
                     self.delegate?.onItemsAddedToList()
+
                 } catch let error as NSError {
                     print(error.localizedDescription)
                 }
@@ -168,9 +169,10 @@ extension TodoItemDataManager {
                 }
 
                 do {
-                    let json = try NSJSONSerialization.jsonObject(with: data,
+                    let json = try JSONSerialization.jsonObject(with: data,
                                                                   options: .mutableContainers)
-                    self.parseTodoList(json: json)
+                    self.parseTodoList(json: json as AnyObject)
+
                     self.delegate?.onItemsAddedToList()
 
                 } catch let error as NSError {
@@ -184,7 +186,7 @@ extension TodoItemDataManager {
 // Methods for Parsing Functions
 extension TodoItemDataManager {
 
-    private func parseTodoList(json: AnyObject) {
+    func parseTodoList(json: AnyObject) {
 
         allTodos[0].removeAll()
         allTodos[1].removeAll()
@@ -201,7 +203,7 @@ extension TodoItemDataManager {
         }
     }
 
-    private func parseItem(item: AnyObject) -> TodoItem? {
+    func parseItem(item: AnyObject) -> TodoItem? {
 
         if let item = item as? [String: AnyObject] {
 

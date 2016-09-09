@@ -25,7 +25,7 @@ enum Theme: String {
     var mainColor: UIColor {
         switch self {
         case .Light:
-            return UIColor.white()
+            return UIColor.white
         case .Dark:
             return UIColor(red: 47, green: 73, blue: 98, opacity: 1)
         }
@@ -34,7 +34,7 @@ enum Theme: String {
     var secondaryColor: UIColor {
         switch self {
         case .Light:
-            return UIColor.white()
+            return UIColor.white
         case .Dark:
             return UIColor(red: 21, green: 35, blue: 51, opacity: 1)
         }
@@ -43,9 +43,9 @@ enum Theme: String {
     var fontColor: UIColor {
         switch self {
         case .Light:
-            return UIColor.black()
+            return UIColor.black
         case .Dark:
-            return UIColor.white()
+            return UIColor.white
         }
     }
 
@@ -61,7 +61,7 @@ enum Theme: String {
     var navBarTitleColor: UIColor {
         switch self {
         case .Light:
-            return UIColor.black()
+            return UIColor.black
         case .Dark:
             return UIColor(red: 15, green: 155, blue: 228, opacity: 1)
         }
@@ -77,7 +77,7 @@ struct ThemeManager {
     static let placeHolderColor = UIColor(red: 189, green: 189, blue: 189, opacity: 0.5)
 
     static func currentTheme() -> Theme {
-        if let storedTheme = NSUserDefaults.standard().object(forKey: selectedTheme) as? String {
+        if let storedTheme = UserDefaults.standard.object(forKey: selectedTheme) as? String {
             return Theme(rawValue: storedTheme)!
         } else {
             return .Dark
@@ -89,14 +89,14 @@ struct ThemeManager {
     }
 
     static func setupStyling() {
-        UIView.appearance().backgroundColor = UIColor.clear()
-        UITableView.appearance().backgroundColor = UIColor.clear()
-        UITableViewCell.appearance().backgroundColor = UIColor.clear()
+        UIView.appearance().backgroundColor = UIColor.clear
+        UITableView.appearance().backgroundColor = UIColor.clear
+        UITableViewCell.appearance().backgroundColor = UIColor.clear
         CustomButton.appearance().backgroundColor = accessoryColor
     }
     static func applyTheme(theme: Theme) {
-        NSUserDefaults.standard().set(theme.rawValue, forKey: selectedTheme)
-        NSUserDefaults.standard().synchronize()
+        UserDefaults.standard.set(theme.rawValue, forKey: selectedTheme)
+        UserDefaults.standard.synchronize()
 
         // Setup Navigation Bar
         UINavigationBar.appearance().barTintColor = theme.navBarColor
@@ -126,14 +126,14 @@ struct ThemeManager {
         gradientLayer.colors = [ ThemeManager.currentTheme().mainColor.cgColor,
                                  ThemeManager.currentTheme().secondaryColor.cgColor]
 
-        inView.backgroundColor = UIColor.clear()
+        inView.backgroundColor = UIColor.clear
         let backgroundLayer = gradientLayer
         backgroundLayer.frame = inView.frame
         inView.layer.insertSublayer(backgroundLayer, at: 0)
     }
 
     static func resetViews() {
-        let windows = UIApplication.shared().windows as [UIWindow]
+        let windows = UIApplication.shared.windows as [UIWindow]
         for window in windows {
             let subviews = window.subviews as [UIView]
             for v in subviews {

@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         if FBSDKAccessToken.current() != nil {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 [unowned self] in
                 self.performSegue(withIdentifier: "todolist", sender: self)
             }

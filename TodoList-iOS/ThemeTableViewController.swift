@@ -33,9 +33,8 @@ class ThemeTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView,
-                   cellForRowAt indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView
-            .dequeueReusableCell(withIdentifier: "ThemeCell", for: indexPath) as UITableViewCell
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ThemeCell", for: indexPath as IndexPath) as UITableViewCell
 
         cell.textLabel?.text = Theme.allValues[indexPath.row].rawValue
         cell.textLabel?.textColor = ThemeManager.currentTheme().fontColor
@@ -49,7 +48,7 @@ class ThemeTableViewController: UITableViewController {
         return cell
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if ThemeManager.currentTheme() != Theme.allValues[indexPath.row] {
             ThemeManager.switchTheme()
@@ -57,7 +56,7 @@ class ThemeTableViewController: UITableViewController {
             tableView.reloadData()
         }
 
-        tableView.deselectRow(at: indexPath, animated: true)
-        
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
+
     }
 }

@@ -23,8 +23,9 @@ class LoginDataManager: NSObject {
 
     func login(viewController: UIViewController) {
         let login = FBSDKLoginManager()
+
         login.logIn(withReadPermissions: ["email"], from: viewController) {
-            (result: FBSDKLoginManagerLoginResult?, error: NSError?) in
+            (result: FBSDKLoginManagerLoginResult?, error: Error?) in
 
             if let error = error {
                 print(error.localizedDescription)
@@ -42,8 +43,8 @@ class LoginDataManager: NSObject {
     }
 
     func logout() {
-        for key in Array(NSUserDefaults.standard().dictionaryRepresentation().keys) {
-            NSUserDefaults.standard().removeObject(forKey: key)
+        for key in Array(UserDefaults.standard.dictionaryRepresentation().keys) {
+            UserDefaults.standard.removeObject(forKey: key)
         }
 
         let login = FBSDKLoginManager()
@@ -61,10 +62,10 @@ class LoginDataManager: NSObject {
                 print(error.localizedDescription)
 
             } else {
-                User.facebookUserID = (result?.objectFor("id") as? String)!
-                User.fullName = (result?.objectFor("first_name") as? String)! + " " +
-                                (result?.objectFor("last_name") as? String)!
-                User.email = (result?.objectFor("email") as? String)!
+                User.facebookUserID = ((result as AnyObject).objectFor("id" as AnyObject) as? String)!
+                User.fullName = ((result as AnyObject).objectFor("first_name" as AnyObject) as? String)! + " " +
+                                ((result as AnyObject).objectFor("last_name" as AnyObject) as? String)!
+                User.email = ((result as AnyObject).objectFor("email" as AnyObject) as? String)!
             }
         }
     }
