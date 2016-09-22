@@ -47,7 +47,7 @@ class BluemixConfiguration: NSObject {
             self.appGUID = appGUID
             self.appRegion = appRegion
             self.localBaseRequestURL = localBaseRequestURL
-            self.remoteBaseRequestURL = remoteBaseRequestURL
+            self.remoteBaseRequestURL = "https://\(remoteBaseRequestURL)"
 
             super.init()
 
